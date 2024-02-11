@@ -1,0 +1,65 @@
+-- Creating EMPLOYEE table with constraints
+CREATE DATABASE company;
+USE company;
+
+CREATE TABLE EMPLOYEE (
+    SSN VARCHAR(100),
+    Name VARCHAR(100),
+    Address VARCHAR(100),
+    Sex CHAR(1),
+    Salary DECIMAL(10, 2),
+    SuperSSN VARCHAR(100),
+    DNo INT,
+    PRIMARY KEY (SSN)
+);
+
+CREATE TABLE DEPARTMENT (
+    DNo INT,
+    DName VARCHAR(100),
+    MgrSSN VARCHAR(100),
+    MgrStartDate DATE,
+    PRIMARY KEY (DNo),
+    FOREIGN KEY (MgrSSN) REFERENCES EMPLOYEE(SSN)
+);
+
+CREATE TABLE DLOCATION (
+    DNo INT,
+    DLoc VARCHAR(100),
+    PRIMARY KEY (DNo, DLoc),
+    FOREIGN KEY (DNo) REFERENCES DEPARTMENT(DNo)
+);
+
+CREATE TABLE PROJECT (
+    PNo INT,
+    PName VARCHAR(100),
+    PLocation VARCHAR(100),
+    DNo INT,
+    PRIMARY KEY (PNo),
+    FOREIGN KEY (DNo) REFERENCES DEPARTMENT(DNo)
+);
+
+CREATE TABLE WORKS_ON (
+    SSN VARCHAR(100),
+    PNo INT,
+    Hours DECIMAL(5, 2),
+    PRIMARY KEY (SSN, PNo),
+    FOREIGN KEY (SSN) REFERENCES EMPLOYEE(SSN),
+    FOREIGN KEY (PNo) REFERENCES PROJECT(PNo)
+);
+
+-- Inserting a record into EMPLOYEE table
+INSERT INTO EMPLOYEE (SSN, Name, Address, Sex, Salary, SuperSSN, DNo) 
+VALUES ('123456789', 'John Doe', '123 Main St', 'Male', 50000.00, NULL, '001');
+
+-- Updating a record in EMPLOYEE table
+UPDATE EMPLOYEE SET Salary = 55000.00 WHERE SSN = '123456789';
+
+-- Deleting a record from EMPLOYEE table
+DELETE FROM EMPLOYEE WHERE SSN = '123456789';
+
+
+SELECT SSN, Salary FROM EMPLOYEE;
+
+
+SELECT AVG(Salary) AS AverageSalary FROM EMPLOYEE;
+

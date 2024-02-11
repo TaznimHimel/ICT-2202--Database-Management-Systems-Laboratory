@@ -1,0 +1,67 @@
+CREATE DATABASE college;
+USE college;
+
+CREATE TABLE STUDENT (
+    USN VARCHAR(100),
+    SName VARCHAR(100),
+    Address VARCHAR(100),
+    Phone VARCHAR(15),
+    Gender CHAR(1),
+    PRIMARY KEY (USN)
+);
+
+CREATE TABLE SEMSEC (
+    SSID VARCHAR(100),
+    Sem INT,
+    Sec CHAR(1),
+    PRIMARY KEY (SSID)
+);
+
+CREATE TABLE CLASS (
+    USN VARCHAR(100),
+    SSID VARCHAR(100),
+    PRIMARY KEY (USN, SSID),
+    FOREIGN KEY (USN) REFERENCES STUDENT(USN),
+    FOREIGN KEY (SSID) REFERENCES SEMSEC(SSID)
+);
+
+CREATE TABLE SUBJECT (
+    Subcode VARCHAR(100),
+    Title VARCHAR(100),
+    Sem INT,
+    Credits INT,
+    PRIMARY KEY (Subcode)
+);
+
+CREATE TABLE IAMARKS (
+    USN VARCHAR(100),
+    Subcode VARCHAR(100),
+    SSID VARCHAR(100),
+    Test1 DECIMAL(5, 2),
+    Test2 DECIMAL(5, 2),
+    Test3 DECIMAL(5, 2),
+    FinalIA DECIMAL(5, 2),
+    PRIMARY KEY (USN, Subcode, SSID),
+    FOREIGN KEY (USN) REFERENCES STUDENT(USN),
+    FOREIGN KEY (Subcode) REFERENCES SUBJECT(Subcode),
+    FOREIGN KEY (SSID) REFERENCES SEMSEC(SSID)
+);
+
+
+-- Insert
+INSERT INTO STUDENT (USN, SName, Address, Phone, Gender)
+VALUES ('1', 'John Doe', '123 Main St', '555-555-5555', 'M');
+
+-- Update
+UPDATE STUDENT
+SET Address = '456 Elm St'
+WHERE USN = '1';
+
+-- Delete
+DELETE FROM STUDENT
+WHERE USN = '1';
+
+ALTER TABLE dept CHANGE DNAME DEPT_NAME datatype(length);
+
+UPDATE IAMARKS
+SET FinalIA = FinalIA * 1.15;

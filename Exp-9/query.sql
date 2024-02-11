@@ -1,0 +1,11 @@
+UPDATE EMPLOYEE
+SET Salary = Salary * 1.10
+WHERE DNo IN (
+    SELECT DNo
+    FROM DEPARTMENT
+    WHERE DName = 'Research'
+);
+
+SELECT Name
+FROM EMPLOYEE
+WHERE YEAR(DOB) = 1990;
